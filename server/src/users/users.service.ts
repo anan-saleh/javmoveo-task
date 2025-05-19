@@ -11,4 +11,9 @@ export class UsersService {
     const createdUser = new this.userModel(userData);
     return createdUser.save();
   }
+
+  async findByUsername(username: string) {
+    const trimmedUserName = username.trim().toLowerCase();
+    return this.userModel.findOne({ username: trimmedUserName }).exec();
+  }
 }

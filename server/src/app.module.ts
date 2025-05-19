@@ -12,10 +12,12 @@ const mongooseConnectionOptions = {
   retryAttempts: 1,
   retryDelay: 1000,
 };
+
 const mongooseForRoot = MongooseModule.forRoot(
   process.env.MONGO_URI,
   mongooseConnectionOptions,
 );
+
 const imports = [ConfigModuleForRoot, mongooseForRoot, UsersModule, AuthModule];
 
 @Module({
