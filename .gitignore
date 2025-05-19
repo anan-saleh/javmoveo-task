@@ -4,3 +4,7 @@ server/node_modules/
 server/.env
 server/dist
 server/build
+
+
+#app/web
+app/web/node_modules/
