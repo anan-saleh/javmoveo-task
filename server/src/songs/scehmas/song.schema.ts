@@ -11,6 +11,9 @@ export class Song extends Document {
 
   @Prop()
   imageUrl: string;
+
+  @Prop()
+  lyricsWithChords: { lyrics: string; chords?: string }[][]
 }
 
 export const SongSchema = SchemaFactory.createForClass(Song);
