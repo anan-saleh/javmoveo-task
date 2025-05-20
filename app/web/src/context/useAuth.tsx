@@ -23,6 +23,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { user, loading } = useUser();
   const login = async (credentials: LoginCredentials): Promise<AuthResponse> => {
     const res = await apiLogin(credentials);
+    localStorage.setItem('user', JSON.stringify(res));
     return res;
   };
 
