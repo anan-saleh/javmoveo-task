@@ -8,3 +8,5 @@ server/build
 
 #app/web
 app/web/node_modules/
+app/web/.env
+app/web/.vite
