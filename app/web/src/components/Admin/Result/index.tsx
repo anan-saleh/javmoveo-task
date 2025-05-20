@@ -15,7 +15,7 @@ export const Result: React.FC = () => {
   );
 
   const handleSelect = (song: Song) => {
-    navigate(`/live?song=${encodeURIComponent(song.name)}`);
+    navigate(`/live`, { state: { song } });
   };
 
   return (
