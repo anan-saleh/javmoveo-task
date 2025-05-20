@@ -42,6 +42,17 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get('logout')
+  logout(@Res({ passthrough: true }) res: Response) {
+    res.clearCookie('token', {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === 'production', // set to true in production
+      sameSite: 'lax',
+    });
+    res.sendStatus(200);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get('me')
   // todo: fix type for this later
   getProfile(@Req() req: any) {
