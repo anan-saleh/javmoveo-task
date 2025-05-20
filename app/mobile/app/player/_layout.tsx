@@ -1,8 +1,9 @@
 import { useAuth } from "@/components/context/useAuth";
+import MainLayout from "@/components/MainLayout";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Stack, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Platform, View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 
 export default function RootLayout() {
   const { user } = useAuth();
@@ -40,10 +41,6 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: Platform.OS === "web" ? false : true,
-      }}
-    />
+    <MainLayout />
   );
 }
