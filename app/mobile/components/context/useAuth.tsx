@@ -26,7 +26,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (credentials: LoginCredentials) => {
     const res = await apiLogin(credentials);
     await AsyncStorage.setItem('user', JSON.stringify(res));
-    setUser(res);
+    setUser(res); // todo: fix type issue
     return res;
   };
 
@@ -37,6 +37,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = async () => {
     await apiLogout()
     await AsyncStorage.removeItem('user');
+    setUser(); // todo: fix type issue
   }
 
   return (
