@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/useAuth';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { useTailwindBreakpoint } from '../hooks/useTailwindBreakpoint';
 
 const instruments = ['Guitar', 'Piano', 'Drums', 'Violin', 'Bass'];
 
@@ -11,6 +12,7 @@ export const Signup: React.FC = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const { isMobile } = useTailwindBreakpoint();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,12 +26,12 @@ export const Signup: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-[#fefbf7]">
+    <div style={{ width: isMobile ? '100%' : 450 }}>
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm bg-white p-6 rounded-lg space-y-5 shadow-md"
+        className="w-full p-6 rounded-lg space-y-5"
       >
-        <div className="text-center">
+        <div className="text-left">
           <h2 className="text-gray-600 text-lg">Welcome to JaMoveo</h2>
           <h1 className="text-3xl font-bold text-yellow-800">Register</h1>
         </div>

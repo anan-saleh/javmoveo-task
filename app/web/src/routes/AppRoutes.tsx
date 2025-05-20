@@ -1,19 +1,18 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 import { AdminRoute } from './AdminRoute';
-import { Login } from '../components/Login';
 import { PlayerDashboard } from '../components/Player/Dashboard';
-import { Signup } from '../components/Signup';
 import { AdminDashboard } from '../components/Admin/Dashboard';
 import { Result } from '../components/Admin/Result';
 import { Live } from '../components/Live';
+import { AuthPage } from '../components/AuthPage';
 
 export const AppRoutes = () => (
   <Routes>
     {/* Public routes */}
     <Route path="/" element={<Navigate to="/login" replace />} />
-    <Route path="/login" element={<Login />} />
-    <Route path="/register" element={<Signup />} />
+    <Route path="/login" element={<AuthPage />} />
+    <Route path="/register" element={<AuthPage />} />
 
     {/* Routes for any logged-in user */}
     <Route element={<PrivateRoute />}>
