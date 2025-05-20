@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, Image, Platform, useWindowDimensions } from 'react-native';
 import AuthForm from './AuthForm';
+import { useRoute } from '@react-navigation/native';
 
 export const LoginView: React.FC = () => {
-  const isRegister = false;
-  const photo = isRegister ? '../../assets/images/register.png' : '../../assets/images/login.png';
+  const route = useRoute();
+  const isRegister = route.name === 'register';
+  const source = isRegister ? require('../../assets/images/register.png') : require('../../assets/images/login.png');
   const { width } = useWindowDimensions();
   const isWideScreen = Platform.OS === 'web' && width >= 768;
   if (isWideScreen) {
@@ -16,7 +18,7 @@ export const LoginView: React.FC = () => {
 
         <View style={styles.rightPane}>
           <Image
-            source={require(photo)}
+            source={source}
             style={styles.image}
             resizeMode="cover"
           />

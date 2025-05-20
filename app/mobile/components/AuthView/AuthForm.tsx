@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import { router } from "expo-router";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Checkbox from 'expo-checkbox';
 import { Feather } from '@expo/vector-icons';
 import { LoginOptionsRow } from './LoginOptionsRow';
 import { useAuth } from '../context/useAuth';
+import { useRoute } from '@react-navigation/native';
+import { Link } from 'expo-router';
 
 const instruments = ['Guitar', 'Piano', 'Drums', 'Violin', 'Bass'];
 
 export default function AuthForm() {
-  const isRegister = false;
+  const route = useRoute();
+  const isRegister = route.name === 'register';
   const { login, register } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -121,8 +123,12 @@ export default function AuthForm() {
       <View style={styles.registerContainer}>
         <Text style={styles.registerText}>
           {navigationText}{' '}
-          <Text style={styles.registerLink} onPress={() => router.push(isRegister ? '/login' : '/login')}>
-            {isRegister ? 'Log in' : 'Register'}
+          <Text
+            style={styles.registerLink}
+          >
+            <Link href={isRegister ? "/login" : "/register"}>
+              {isRegister ? 'Log in' : 'Register'}
+            </Link>
           </Text>
         </Text>
       </View>
