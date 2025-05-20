@@ -5,26 +5,41 @@ import { Picker } from '@react-native-picker/picker';
 import Checkbox from 'expo-checkbox';
 import { Feather } from '@expo/vector-icons';
 import { LoginOptionsRow } from './LoginOptionsRow';
+import { useAuth } from '../context/useAuth';
 
 const instruments = ['Guitar', 'Piano', 'Drums', 'Violin', 'Bass'];
 
 export default function AuthForm() {
   const isRegister = false;
+  const { login, register } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [instrument, setInstrument] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const handleSubmit = () => {
-    console.log('Login clicked', { username, password });
+  const handleSubmit = async () => {
+    try {
+      if (isRegister) {
+        await register({
+        username, password, instrument, isAdmin
+      });
+      } else {
+        await login({
+          username, password
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const titleText = isRegister ? 'Register' : 'Login';
   const userNameText = isRegister ? 'Username*' : 'Enter your Username*';
   const passwordText = isRegister ? 'Create password*' : 'Enter your Password*';
   const buttonText = isRegister ? 'Register' : 'Login';
-  const navigationText = isRegister ? 'Don’t have an account?' : 'Already have an account?';
+  const navigationText = isRegister ? 'Already have an account?' : 'Don’t have an account?';
 
   return (
     <View style={styles.container}>
@@ -47,7 +62,7 @@ export default function AuthForm() {
       </View>
 
 {
-  isRegister ? 
+  (isRegister && !isAdmin) ? 
     <View style={styles.inputGroup}>
       <Text style={styles.label}>Your instrument*</Text>
       <View style={styles.pickerWrapper}>
@@ -92,7 +107,11 @@ export default function AuthForm() {
         display: 'flex',
         flexDirection: 'row',
       }}>
-        <Checkbox style={{ marginRight: 5 }} />
+        <Checkbox
+          value={isAdmin}
+          onValueChange={setIsAdmin}
+          style={{ marginRight: 5 }}
+        />
         <Text style={styles.label}>Is Admin ?</Text>
       </View> : null
   }
@@ -103,7 +122,7 @@ export default function AuthForm() {
         <Text style={styles.registerText}>
           {navigationText}{' '}
           <Text style={styles.registerLink} onPress={() => router.push(isRegister ? '/login' : '/login')}>
-            {isRegister ? 'Register' : 'Log in'}
+            {isRegister ? 'Log in' : 'Register'}
           </Text>
         </Text>
       </View>
