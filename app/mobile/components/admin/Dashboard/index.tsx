@@ -31,6 +31,9 @@ export const AdminDashboard: React.FC = () => {
 
   const handleSearch = () => {
     console.log(query);
+     if (query.trim()) {
+      router.navigate(`/admin/result?query=${encodeURIComponent(query.trim())}`);
+    }
   };
 
   const renderSong = ({ item }: any) => (
