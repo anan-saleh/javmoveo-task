@@ -6,12 +6,13 @@ import { Feather } from '@expo/vector-icons';
 import { LoginOptionsRow } from './LoginOptionsRow';
 import { useAuth } from '../context/useAuth';
 import { useRoute } from '@react-navigation/native';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 
 const instruments = ['Guitar', 'Piano', 'Drums', 'Violin', 'Bass'];
 
 export default function AuthForm() {
   const route = useRoute();
+  const router = useRouter();
   const isRegister = route.name === 'register';
   const { login, register } = useAuth();
   const [username, setUsername] = useState('');
@@ -27,10 +28,12 @@ export default function AuthForm() {
         await register({
         username, password, instrument, isAdmin
       });
+      router.navigate("/login");
       } else {
-        await login({
+        const res = await login({
           username, password
         });
+        router.navigate(res.isAdmin ? "/admin" : "/player");
       }
     } catch (error) {
       console.error(error);
