@@ -6,6 +6,7 @@ import { AdminDashboard } from '../components/Admin/Dashboard';
 import { Result } from '../components/Admin/Result';
 import { Live } from '../components/Live';
 import { AuthPage } from '../components/AuthPage';
+import { SharedRoute } from './SharedRoute';
 
 export const AppRoutes = () => (
   <Routes>
@@ -14,9 +15,12 @@ export const AppRoutes = () => (
     <Route path="/login" element={<AuthPage />} />
     <Route path="/register" element={<AuthPage />} />
 
+    <Route element={<SharedRoute />}>
+      <Route path="/live" element={<Live />} />
+    </Route>
+  
     {/* Routes for any logged-in user */}
     <Route element={<PrivateRoute />}>
-      <Route path="/live" element={<Live />} />
       <Route path="/player/dashboard" element={<PlayerDashboard />} />
     </Route>
 
@@ -24,7 +28,6 @@ export const AppRoutes = () => (
     <Route element={<AdminRoute />}>
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/result" element={<Result />} />
-      <Route path="/live" element={<Live />} />
     </Route>
 
     {/* Unauthorized access page */}

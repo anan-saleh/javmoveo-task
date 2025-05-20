@@ -2,6 +2,7 @@ import React from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useSongs } from '../../hooks/useSongs';
 import type { Song } from '../../../api/songApi';
+import { socket } from '../../../api/socket/socket';
 
 export const Result: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,6 +16,7 @@ export const Result: React.FC = () => {
   );
 
   const handleSelect = (song: Song) => {
+    socket.emit('select-song', song);
     navigate(`/live`, { state: { song } });
   };
 

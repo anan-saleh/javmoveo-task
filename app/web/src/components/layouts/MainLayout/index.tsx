@@ -2,11 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Header } from '../../Header';
 
-interface MainLayoutProps {
-    isAdmin?: boolean
-}
-
-export const MainLayout: React.FC<MainLayoutProps> = ({ isAdmin }) => {
+export const MainLayout: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#fffbee] flex flex-col">
       <Header />
