@@ -71,7 +71,7 @@ export const Login: React.FC = () => {
           type="submit"
           className="w-full bg-yellow-400 hover:bg-yellow-500 transition-colors py-2 rounded-md font-semibold text-black"
         >
-          Register
+          Login
         </button>
 
         <p className="text-center text-sm text-gray-500">
