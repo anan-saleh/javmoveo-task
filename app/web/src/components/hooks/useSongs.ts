@@ -14,7 +14,6 @@ export const useSongs = (query: string) => {
       setError(null);
       try {
         const data = await getSongsByName(query);
-        console.log(data);
         setSongs(data);
       } catch (err: any) { // todo: fix the any type to handle axios errors
         setError(err?.message || "Failed to fetch songs");

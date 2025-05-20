@@ -13,8 +13,7 @@ export interface RegisterUserData {
 }
 
 export interface AuthResponse {
-  accessToken: string;
-  userId: string;
+  username: string;
   isAdmin: boolean;
   instrument?: string;
 }
@@ -27,4 +26,8 @@ export const login = async (credentials: LoginCredentials): Promise<AuthResponse
 export const register = async (userData: RegisterUserData): Promise<AuthResponse> => {
   const response = await axiosInstance.post<AuthResponse>('/auth/register', userData);
   return response.data;
+};
+
+export const logout = async (): Promise<void> => {
+  await axiosInstance.get('/auth/logout');
 };
