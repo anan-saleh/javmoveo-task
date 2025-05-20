@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { SongsModule } from './songs/songs.module';
 
 const ConfigModuleForRoot = ConfigModule.forRoot();
 
@@ -18,7 +19,13 @@ const mongooseForRoot = MongooseModule.forRoot(
   mongooseConnectionOptions,
 );
 
-const imports = [ConfigModuleForRoot, mongooseForRoot, UsersModule, AuthModule];
+const imports = [
+  ConfigModuleForRoot,
+  mongooseForRoot,
+  UsersModule,
+  AuthModule,
+  SongsModule,
+];
 
 @Module({
   imports: imports,
