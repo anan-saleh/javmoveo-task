@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SongsModule } from './songs/songs.module';
+import { SongGateway } from './songs/gateway/song.gateway';
 
 const ConfigModuleForRoot = ConfigModule.forRoot();
 
@@ -30,6 +31,6 @@ const imports = [
 @Module({
   imports: imports,
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, SongGateway],
 })
 export class AppModule {}
