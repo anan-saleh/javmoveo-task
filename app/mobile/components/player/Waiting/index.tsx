@@ -1,7 +1,20 @@
-import React from 'react'
+import { socket } from '@/api/socket/socket';
+import { useRouter } from 'expo-router';
+import React, { useEffect } from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 
 export const Waiting = () => {
+  const router = useRouter();
+  useEffect(() => {
+    socket.on('song-selected', (data) => {
+      console.log('Song selected by admin:', data);
+      router.push({ pathname: '/private/live', params: { song: JSON.stringify(data) } });
+    });
+
+    return () => {
+      socket.off('song-selected');
+    };
+  }, []);
 
   return (
     <View style={styles.container}>
