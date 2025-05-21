@@ -4,3 +4,9 @@ server/node_modules/
 server/.env
 server/dist
 server/build
+
+app/web/node_modules/
+app/web/.env
+app/web/.vite
+
+app/mobile/.env
