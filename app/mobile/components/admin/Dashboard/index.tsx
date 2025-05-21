@@ -30,7 +30,6 @@ export const AdminDashboard: React.FC = () => {
   const { width } = useWindowDimensions();
 
   const handleSearch = () => {
-    console.log(query);
      if (query.trim()) {
       router.navigate(`/admin/result?query=${encodeURIComponent(query.trim())}`);
     }

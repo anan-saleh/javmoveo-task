@@ -7,7 +7,6 @@ export const Waiting = () => {
   const router = useRouter();
   useEffect(() => {
     socket.on('song-selected', (data) => {
-      console.log('Song selected by admin:', data);
       router.push({ pathname: '/private/live', params: { song: JSON.stringify(data) } });
     });
 
