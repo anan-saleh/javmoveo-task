@@ -8,7 +8,7 @@ import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({
   cors: {
-    origin: 'http://localhost:5173',
+    origin: process.env.FRONTEND_URL, //todo: understand why env variable not working here
   },
 })
 export class SongGateway implements OnGatewayConnection {
