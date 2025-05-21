@@ -9,6 +9,6 @@ async function bootstrap() {
     origin: process.env.FRONTEND_URL,
     credentials: true,
   });
-  await app.listen(3000);
+  await app.listen(3000, '0.0.0.0'); // expose 0.0.0.0 for ec2 connection
 }
 bootstrap();
