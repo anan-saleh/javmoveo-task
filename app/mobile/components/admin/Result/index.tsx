@@ -28,10 +28,12 @@ export const Result = () => {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleSelect(item)} style={styles.songItem}>
-      <Image source={{ uri: item.image }} style={styles.image} />
-      <View style={{ display: 'flex', flexDirection: 'column' }}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.artist}>{item.artist}</Text>
+      <View style={{ display: 'flex', flexDirection: 'row' }}>
+        <Image source={{ uri: item.image }} style={styles.image} />
+        <View style={{ display: 'flex', flexDirection: 'column' }}>
+          <Text style={styles.name}>Song: {item.name}</Text>
+          <Text style={styles.artist}>Arist: {item.artist}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -66,7 +68,6 @@ const styles = StyleSheet.create({
   songItem: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#ffffff',
     padding: 12,
     borderRadius: 10,
     marginBottom: 12,
