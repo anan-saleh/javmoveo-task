@@ -16,8 +16,10 @@ export const Live = () => {
 
   useEffect(() => {
     socket.on('song-removed', () => {
-      const destination = user.isAdmin ? '/admin/dashboard' : '/player';
-      router.replace(destination);
+      if (user) {
+        const destination = user?.isAdmin ? '/admin/dashboard' : '/player';
+        router.replace(destination);
+      }
     });
     return () => {
       socket.off('song-removed');
@@ -50,11 +52,11 @@ export const Live = () => {
       <Text style={styles.title}>Opening:</Text>
       <View style={styles.box}>
         {getLyricsAndChords()}
-        {user.isAdmin && (
+        {user?.isAdmin ? (
           <TouchableOpacity onPress={quitSong} style={styles.quitButton}>
             <Text style={styles.quitButtonText}>Quit</Text>
           </TouchableOpacity>
-        )}
+        ) : null}
       </View>
     </>
   );
