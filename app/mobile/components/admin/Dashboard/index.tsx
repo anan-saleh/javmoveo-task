@@ -55,7 +55,7 @@ export const AdminDashboard: React.FC = () => {
             ]}>
             <TextInput
               style={styles.input}
-              placeholder="Search any song..."
+              placeholder="Search song by name..."
               value={query}
               onChangeText={setQuery}
               onSubmitEditing={handleSearch}
