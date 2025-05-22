@@ -17,6 +17,7 @@ import { JwtAuthGuard } from './guards/auth.guard';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+  private isProd = process.env.NODE_ENV === 'prod'; // todo: make it globally avaliable
 
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
@@ -28,10 +29,10 @@ export class AuthController {
   @Post('login')
   async login(@Request() req, @Res({ passthrough: true }) res: Response) {
     const loggedInUser = await this.authService.login(req.user);
-    res.cookie('token', loggedInUser.token, {
-      httpOnly: false,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
+    res.cookie('token', loggedInUser.token, { // todo: fix duplication
+      httpOnly: this.isProd ? false : true,
+      sameSite: this.isProd ? 'none' : 'lax',
+      secure: this.isProd,
       maxAge: 1000 * 60 * 60 * 24,
     });
 
@@ -44,10 +45,10 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get('logout')
   logout(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie('token', {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === 'production', // set to true in production
-      sameSite: 'lax',
+    res.clearCookie('token', { // todo: fix duplication
+      httpOnly: this.isProd ? false : true,
+      sameSite: this.isProd ? 'none' : 'lax',
+      secure: this.isProd,
     });
     res.sendStatus(200);
   }
