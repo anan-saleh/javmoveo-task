@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import {
   View,
   Text,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
@@ -29,25 +28,27 @@ export const Live = () => {
     socket.emit('remove-song');
   };
 
+  const prepAllSongsAndLyrics = song?.lyricsWithChords?.flatMap((line) => {
+    return line;
+  })
+
   const getLyricsAndChords = () => {
-    return song?.lyricsWithChords?.map((line, index) => (
-      <View key={index} style={styles.lyricLine}>
-        {line.map((item, i) => (
+      return prepAllSongsAndLyrics.map((item, i) => (
             <View key={i} style={{ display: 'flex', flexDirection: 'column' }}>
                 <Text style={styles.lyricSegment}>
                     {item.chords && <Text style={styles.chord}>{item.chords + ' '}</Text>}
                     <Text>{item.lyrics}</Text>
+                    {item.chords && <Text style={styles.chord}>{item.chords + ' '}</Text>}
+                    <Text>{item.lyrics}</Text>
                 </Text>
             </View>
-        ))}
-      </View>
-    ));
+        ))
   };
 
   return (
-    <View style={styles.container}>
+    <>
+      <Text style={styles.title}>Opening:</Text>
       <View style={styles.box}>
-        <Text style={styles.title}>Opening:</Text>
         {getLyricsAndChords()}
         {user.isAdmin && (
           <TouchableOpacity onPress={quitSong} style={styles.quitButton}>
@@ -55,7 +56,7 @@ export const Live = () => {
           </TouchableOpacity>
         )}
       </View>
-    </View>
+    </>
   );
 };
 
@@ -65,7 +66,11 @@ const styles = StyleSheet.create({
   },
   box: {
     alignItems: 'flex-start',
-    padding: 20,
+    height: '100%',
+    paddingHorizontal: 20,
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    alignContent: 'flex-start',
   },
   title: {
     fontSize: 20,

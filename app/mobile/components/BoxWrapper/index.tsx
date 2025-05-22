@@ -7,10 +7,9 @@ interface BoxWrapperProps {
 }
 
 export const BoxWrapper: React.FC<BoxWrapperProps> = ({ isDashed = false, children }) => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   const boxWidth = width > 768 ? width * 0.7 : width * 0.9;
-  const boxHeight = height > 768 ? height * 0.8 : height * 0.75;
 
   return (
     <View style={styles.wrapper}>
@@ -19,7 +18,9 @@ export const BoxWrapper: React.FC<BoxWrapperProps> = ({ isDashed = false, childr
           styles.innerBox,
           {
             width: boxWidth,
-            height: boxHeight,
+            height: '100%',
+            maxHeight: 700,
+            columnGap: 15,
           },
           isDashed ? styles.dashedBorder : styles.solidBorder,
         ]}
