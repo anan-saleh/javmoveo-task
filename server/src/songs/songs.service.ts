@@ -14,4 +14,8 @@ export class SongsService {
       : {};
     return this.songModel.find(filter).exec();
   }
+
+  async getAllSongs(): Promise<Song[]> {
+    return this.songModel.find().exec();
+  }
 }
