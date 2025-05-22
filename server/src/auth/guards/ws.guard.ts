@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Socket } from 'socket.io';
+import { ERROR_TYPE } from 'src/utils/utils';
 
 @Injectable()
 export class WsJwtGuard implements CanActivate {
@@ -19,14 +20,14 @@ export class WsJwtGuard implements CanActivate {
       .find((c) => c.startsWith('token='))
       ?.split('=')[1];
 
-    if (!token) throw new UnauthorizedException('No token');
+    if (!token) throw new UnauthorizedException(ERROR_TYPE.MISSING_TOKEN);
 
     try {
       const payload = this.jwtService.verify(token);
       client.data.user = payload;
       return true;
     } catch {
-      throw new UnauthorizedException('Invalid token');
+      throw new UnauthorizedException(ERROR_TYPE.INVALID_TOKEN);
     }
   }
 }

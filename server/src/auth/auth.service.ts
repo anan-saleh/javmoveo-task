@@ -4,6 +4,7 @@ import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { UserDocument } from 'src/users/schemas/user.schema';
 import { JwtService } from '@nestjs/jwt';
+import { ERROR_TYPE } from 'src/utils/utils';
 
 @Injectable()
 export class AuthService {
@@ -21,12 +22,12 @@ export class AuthService {
     const { username, password, instrument, isAdmin = false } = registerDto;
 
     if (!username || !password) {
-      throw new BadRequestException('Missing username or passed');
+      throw new BadRequestException(ERROR_TYPE.MISSING_LOGIN_DATA);
     }
 
     const existingUser = await this.usersService.findByUsername(username);
     if (existingUser) {
-      throw new BadRequestException('Username already exists');
+      throw new BadRequestException(ERROR_TYPE.USER_ALREADY_EXISTS);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
