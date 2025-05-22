@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Platform } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Checkbox from 'expo-checkbox';
 import { Feather } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import { LoginOptionsRow } from './LoginOptionsRow';
 import { useAuth } from '../context/useAuth';
 import { useRoute } from '@react-navigation/native';
 import { Link, useRouter } from 'expo-router';
+import { showMessage } from 'react-native-flash-message';
 
 const instruments = ['Guitar', 'Piano', 'Drums', 'Violin', 'Bass'];
 
@@ -36,7 +37,12 @@ export default function AuthForm() {
         router.navigate(res.isAdmin ? "/admin" : "/player");
       }
     } catch (error) {
-      console.error(error);
+      const description = error?.response?.data?.message;
+      showMessage({
+        message: "Error",
+        description,
+        type: "danger",
+      });
     }
   };
 
