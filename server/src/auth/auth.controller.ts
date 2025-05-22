@@ -50,7 +50,9 @@ export class AuthController {
       sameSite: this.isProd ? 'none' : 'lax',
       secure: this.isProd,
     });
-    res.sendStatus(200);
+    return {
+      message: 'Logged out',
+    };
   }
 
   @UseGuards(JwtAuthGuard)
