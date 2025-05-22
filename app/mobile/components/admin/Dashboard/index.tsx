@@ -8,11 +8,11 @@ import {
   FlatList,
   Image,
   TouchableOpacity,
-  useWindowDimensions,
   ScrollView,
   SafeAreaView,
 } from 'react-native';
 import { Ionicons, Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { useResize } from '@/hooks/useResize';
 
 const recommendedSongs = [
   { id: '1', title: 'Echo – The Weeknd', image: 'someImage' },
@@ -27,7 +27,8 @@ const recommendedSongs = [
 export const AdminDashboard: React.FC = () => {
   const [query, setQuery] = useState('');
   const router = useRouter();
-  const { width } = useWindowDimensions();
+  const { isMobile } = useResize();
+  console.log(isMobile);
 
   const handleSearch = () => {
      if (query.trim()) {
@@ -51,7 +52,12 @@ export const AdminDashboard: React.FC = () => {
     <SafeAreaView style={styles.root}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.contentWrapper}>
-          <View style={styles.searchWrapper}>
+          <View style={[
+              styles.searchWrapper,
+              { 
+                width: isMobile ? '100%' : 400 
+              }
+            ]}>
             <TextInput
               style={styles.input}
               placeholder="Search any song..."
@@ -97,7 +103,6 @@ const styles = StyleSheet.create({
   searchWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: 400,
     backgroundColor: '#f1ede2',
     borderRadius: 12,
     paddingHorizontal: 16,
