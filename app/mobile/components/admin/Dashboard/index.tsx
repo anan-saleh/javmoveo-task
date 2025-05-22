@@ -13,39 +13,34 @@ import {
 } from 'react-native';
 import { Ionicons, Entypo, FontAwesome5 } from '@expo/vector-icons';
 import { useResize } from '@/hooks/useResize';
-
-const recommendedSongs = [
-  { id: '1', title: 'Echo – The Weeknd', image: 'someImage' },
-  { id: '2', title: 'Gold – Dua Lipa', image: 'someImage' },
-  { id: '3', title: 'Falling – Harry Styles', image: 'someImage' },
-  { id: '4', title: 'Waves – Dean Lewis', image: 'someImage' },
-  { id: '5', title: 'Shivers – Ed Sheeran', image: 'someImage' },
-  { id: '6', title: 'Alive – Sia', image: 'someImage' },
-  { id: '7', title: 'Horizon – Coldplay', image: 'someImage' },
-];
+import { useSongs } from '@/hooks/useSongs';
+import { Song } from '@/api/songApi';
 
 export const AdminDashboard: React.FC = () => {
   const [query, setQuery] = useState('');
+  const { songs } = useSongs();
   const router = useRouter();
   const { isMobile } = useResize();
-  console.log(isMobile);
-
-  const handleSearch = () => {
+  const handleSearch = (song: Song) => {
      if (query.trim()) {
       router.navigate(`/admin/result?query=${encodeURIComponent(query.trim())}`);
+    } else {
+      router.navigate(`/admin/result?query=${encodeURIComponent(song.name.trim())}`);
     }
   };
 
   const renderSong = ({ item }: any) => (
-    <View style={styles.songItem}>
-      <Image source={item.image} style={styles.songImage} />
-      <Text style={styles.songTitle}>{item.title}</Text>
-      <View style={styles.songIcons}>
-        <Text style={styles.icon}><Text style={styles.iconFont}>T</Text></Text>
-        <Entypo name="video" size={20} style={styles.icon} />
-        <FontAwesome5 name="music" size={18} style={styles.icon} />
+    <TouchableOpacity onPress={(e) => handleSearch(item)}>
+      <View style={styles.songItem}>
+        <Image source={item.image} style={styles.songImage} />
+        <Text style={styles.songTitle}>{item.name}</Text>
+        <View style={styles.songIcons}>
+          <Text style={styles.icon}><Text style={styles.iconFont}>T</Text></Text>
+          <Entypo name="video" size={20} style={styles.icon} />
+          <FontAwesome5 name="music" size={18} style={styles.icon} />
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -74,7 +69,7 @@ export const AdminDashboard: React.FC = () => {
         <View style={styles.contentWrapper}>
             <Text style={styles.recommendedText}>Recommended song list</Text>
             <FlatList
-                data={recommendedSongs}
+                data={songs}
                 renderItem={renderSong}
                 keyExtractor={(item) => item.id}
                 scrollEnabled={false}
