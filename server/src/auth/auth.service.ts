@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
@@ -19,6 +19,15 @@ export class AuthService {
   }
   async register(registerDto: RegisterDto) {
     const { username, password, instrument, isAdmin = false } = registerDto;
+
+    if (!username || !password) {
+      throw new BadRequestException('Missing username or passed');
+    }
+
+    const existingUser = await this.usersService.findByUsername(username);
+    if (existingUser) {
+      throw new BadRequestException('Username already exists');
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
