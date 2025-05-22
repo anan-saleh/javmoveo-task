@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
+    textAlign: 'center',
     fontSize: 38
   }
 });
