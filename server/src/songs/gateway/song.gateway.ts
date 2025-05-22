@@ -10,7 +10,7 @@ import { WsJwtGuard } from 'src/auth/guards/ws.guard';
 
 @WebSocketGateway({
   cors: {
-    origin: 'http://localhost:8081',
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   },
 })
