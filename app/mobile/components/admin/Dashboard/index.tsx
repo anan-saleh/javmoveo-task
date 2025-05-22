@@ -63,6 +63,7 @@ export const AdminDashboard: React.FC = () => {
               placeholder="Search any song..."
               value={query}
               onChangeText={setQuery}
+              onSubmitEditing={handleSearch}
               placeholderTextColor="#333"
             />
             <TouchableOpacity onPress={handleSearch} style={styles.searchIcon}>
