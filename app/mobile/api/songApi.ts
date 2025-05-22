@@ -8,7 +8,12 @@ export interface Song {
   lyricsWithChords: { lyrics: string; chords?: string }[][];
 };
 
+export const getAllSongs = async (): Promise<Song[]> => {
+  const response = await axiosInstance.get<Song[]>(`/songs/getAllSongs`);
+  return response.data;
+};
+
 export const getSongsByName = async (query: string): Promise<Song[]> => {
-  const response = await axiosInstance.get<Song[]>(`/songs/getSongByName?query=${encodeURIComponent(query)}`);
+  const response = await axiosInstance.get<Song[]>(`/songs/getAllSongs?query=${encodeURIComponent(query)}`);
   return response.data;
 };
