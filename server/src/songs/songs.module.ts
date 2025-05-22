@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { SongsController } from './songs.controller';
 import { SongsService } from './songs.service';
 import { Song, SongSchema } from './scehmas/song.schema';
+import { AuthModule } from 'src/auth/auth.module';
 
 const mongooseModuleForFeatureProps = [
   {
@@ -15,8 +16,8 @@ const mongooseModuleForFeature = MongooseModule.forFeature(
 );
 
 @Module({
-  imports: [mongooseModuleForFeature],
+  imports: [mongooseModuleForFeature, AuthModule],
   controllers: [SongsController],
-  providers: [SongsService],
+  providers: [SongsService]
 })
 export class SongsModule {}

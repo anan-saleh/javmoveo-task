@@ -1,4 +1,3 @@
-// src/songs/songs.controller.ts
 import { Controller, Get, Query } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { SearchSongsDto } from './dto/search-songs.dto';

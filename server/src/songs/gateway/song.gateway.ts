@@ -1,3 +1,4 @@
+import { UseGuards } from '@nestjs/common';
 import {
   SubscribeMessage,
   WebSocketGateway,
@@ -5,10 +6,12 @@ import {
   OnGatewayConnection,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { WsJwtGuard } from 'src/auth/guards/ws.guard';
 
 @WebSocketGateway({
   cors: {
-    origin: process.env.FRONTEND_URL, //todo: understand why env variable not working here
+    origin: 'http://localhost:8081',
+    credentials: true,
   },
 })
 export class SongGateway implements OnGatewayConnection {
@@ -18,15 +21,18 @@ export class SongGateway implements OnGatewayConnection {
   handleConnection(client: Socket) {
     console.log(`Client connected: ${client.id}`);
   }
-
+  @UseGuards(WsJwtGuard)
   @SubscribeMessage('select-song')
   handleSongSelection(client: Socket, songData: any) {
+    if (!client.data.user?.isAdmin) return;
     console.log('Admin selected song:', songData);
     this.server.emit('song-selected', songData);
   }
 
+  @UseGuards(WsJwtGuard)
   @SubscribeMessage('remove-song')
-  handleSongRemove() {
+  handleSongRemove(client: Socket) {
+    if (!client.data.user?.isAdmin) return;
     console.log("Admin removed song");
     this.server.emit('song-removed');
   }
