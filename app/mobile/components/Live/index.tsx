@@ -52,6 +52,8 @@ export const Live = () => {
       <Text style={styles.title}>Opening:</Text>
       <View style={styles.box}>
         {getLyricsAndChords()}
+      </View>
+      <View>
         {user?.isAdmin ? (
           <TouchableOpacity onPress={quitSong} style={styles.quitButton}>
             <Text style={styles.quitButtonText}>Quit</Text>
@@ -69,6 +71,8 @@ const styles = StyleSheet.create({
   box: {
     alignItems: 'flex-start',
     height: '100%',
+    maxHeight: 500,
+    columnGap: 25,
     paddingHorizontal: 20,
     flexDirection: 'column',
     flexWrap: 'wrap',
@@ -97,7 +101,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   quitButton: {
-    marginTop: 30,
     alignSelf: 'flex-end',
     paddingHorizontal: 20,
     paddingVertical: 10,

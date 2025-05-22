@@ -19,8 +19,7 @@ export const BoxWrapper: React.FC<BoxWrapperProps> = ({ isDashed = false, childr
           {
             width: boxWidth,
             height: '100%',
-            maxHeight: 700,
-            columnGap: 15,
+            maxHeight: 640,
           },
           isDashed ? styles.dashedBorder : styles.solidBorder,
         ]}
