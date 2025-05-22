@@ -24,7 +24,6 @@ export class SongGateway implements OnGatewayConnection {
   @UseGuards(WsJwtGuard)
   @SubscribeMessage('select-song')
   handleSongSelection(client: Socket, songData: any) {
-    if (!client.data.user?.isAdmin) return;
     console.log('Admin selected song:', songData);
     this.server.emit('song-selected', songData);
   }
