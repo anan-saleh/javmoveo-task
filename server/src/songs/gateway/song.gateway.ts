@@ -29,10 +29,8 @@ export class SongGateway implements OnGatewayConnection {
     this.server.emit('song-selected', songData);
   }
 
-  @UseGuards(WsJwtGuard)
   @SubscribeMessage('remove-song')
-  handleSongRemove(client: Socket) {
-    if (!client.data.user?.isAdmin) return;
+  handleSongRemove() {
     console.log("Admin removed song");
     this.server.emit('song-removed');
   }
