@@ -1,26 +1,15 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useAuth } from '../context/useAuth';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { UserAvatarDropdown } from '../UserAvatar';
 
 export const Header: React.FC = () => {
-  const { logout } = useAuth();
-  const router = useRouter();
-
-  const onLogout = async () => {
-    await logout();
-    router.replace('/');
-  };
-
   return (
     <View style={styles.header}>
       <View style={styles.brandContainer}>
         <Image source={require('../../assets/images/Icon-web.png')} style={styles.logo} />
         <Text style={styles.title}>JAMOVEO</Text>
       </View>
-      <TouchableOpacity onPress={onLogout} style={styles.logoutButton}>
-        <Text style={styles.logoutText}>Logout</Text>
-      </TouchableOpacity>
+      <UserAvatarDropdown />
     </View>
   );
 };
@@ -48,12 +37,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     marginLeft: 12,
-  },
-  logoutButton: {
-    padding: 8,
-  },
-  logoutText: {
-    color: '#facc15',
-    fontSize: 16,
   },
 });
